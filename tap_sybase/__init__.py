@@ -135,7 +135,8 @@ def schema_for_column(c, config):
             result.additionalProperties = {"scale_precision": f"({c.numeric_precision},{c.numeric_scale or 0})"}
         else:
             result.type = ["null", "number"]
-            result.multipleOf = 10 ** (0 - c.numeric_scale)
+            if c.numeric_scale is not None:
+                result.multipleOf = 10 ** (0 - c.numeric_scale)
 
 
     elif data_type in STRING_TYPES:
